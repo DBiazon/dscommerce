@@ -3,18 +3,12 @@ package com.biazon.dscommerce.entiteis;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.biazon.dscommerce.entiteis.enumeration.OrderStatus;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -24,29 +18,23 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "TB_ORDER")
+@Table(name = "TB_PAYMENT")
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order implements Serializable {
-	
-	private static final long serialVersionUID = -7429510042659299656L;
+public class Payment implements Serializable{
+
+	private static final long serialVersionUID = -3814086159743869701L;
 	
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
 	@Column(columnDefinition = "TIMESTAMP")
-	private Instant moment;
+	private Instant moment; 
 	
-	@Enumerated(EnumType.STRING)
-	private OrderStatus status;
-	
-	@ManyToOne
-	@JoinColumn(name = "client_id")
-	private User client;
-	
-	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-	private Payment payment;
+	@OneToOne
+	@MapsId
+	private Order order;
 }
