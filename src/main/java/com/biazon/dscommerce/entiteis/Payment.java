@@ -22,18 +22,18 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Payment implements Serializable{
+public class Payment implements Serializable {
 
 	private static final long serialVersionUID = -3814086159743869701L;
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(columnDefinition = "TIMESTAMP")
-	private Instant moment; 
-	
+	private Instant moment;
+
 	@OneToOne
 	@MapsId
 	private Order order;

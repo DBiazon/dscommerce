@@ -1,16 +1,14 @@
 package com.biazon.dscommerce.entiteis;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,13 +17,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "TB_USER")
+@Table(name = "TB_CATEGORY")
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class Category implements Serializable {
 
-	private static final long serialVersionUID = -3490568862987548938L;
+	private static final long serialVersionUID = 7069690454347982286L;
 
 	@EqualsAndHashCode.Include
 	@Id
@@ -34,15 +32,6 @@ public class User implements Serializable {
 
 	private String name;
 
-	@Column(unique = true)
-	private String email;
-
-	private String phone;
-
-	private LocalDate birthDate;
-
-	private String password;
-
-	@OneToMany(mappedBy = "client")
-	private List<Order> orders = new ArrayList<>();
+	@ManyToMany(mappedBy = "categories")
+	private Set<Product> products = new HashSet<>();
 }
