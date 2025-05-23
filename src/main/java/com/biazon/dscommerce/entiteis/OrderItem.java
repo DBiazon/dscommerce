@@ -1,10 +1,6 @@
-package com.biazon.dscommerce;
+package com.biazon.dscommerce.entiteis;
 
 import java.io.Serializable;
-
-import com.biazon.dscommerce.entiteis.Order;
-import com.biazon.dscommerce.entiteis.OrderItemPk;
-import com.biazon.dscommerce.entiteis.Product;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;

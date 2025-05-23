@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.biazon.dscommerce.OrderItem;
 import com.biazon.dscommerce.entiteis.enumeration.OrderStatus;
 
 import jakarta.persistence.CascadeType;
