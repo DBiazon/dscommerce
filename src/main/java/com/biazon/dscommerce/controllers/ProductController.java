@@ -30,8 +30,6 @@ public class ProductController {
 	@Operation(summary = "Lista geral de Produtos", description = "Função responsável por lista todos os produtos")
 	public ResponseEntity<List<ProductResponseDTO>> findAllProduct() {
 		List<ProductResponseDTO> listProducts = productService.findAllProducts();
-		
-		
 		return ResponseEntity.status(HttpStatus.OK).body(listProducts);
 	}
 	

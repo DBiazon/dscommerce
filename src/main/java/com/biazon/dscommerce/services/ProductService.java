@@ -25,22 +25,13 @@ public class ProductService {
 		List<Product> listProducts = this.productRepository.findAll();
 		List<ProductResponseDTO> listProductDto = new ArrayList<>();
 		
-		for (Product product : listProducts) {
-			ProductResponseDTO productResponseDTO = new ProductResponseDTO(product);
-			
-			listProductDto.add(productResponseDTO);
-		}
-		
+		listProducts.stream().forEach(e  -> listProductDto.add(new ProductResponseDTO(e)));
+	
 		return listProductDto;
 	}
 	
 	@Transactional(readOnly = true)
-	public ProductResponseDTO getOneProduct(Long id){
-//		Optional<Product> resultProduct = this.productRepository.findById(id);
-//		Product product = resultProduct.get();
-//		ProductResponseDTO productResponseDTO = new ProductResponseDTO(product);
-//		return productResponseDTO;
-		
+	public ProductResponseDTO getOneProduct(Long id){		
 		Product product = this.productRepository.findById(id).get();
 		return new ProductResponseDTO(product);
 	} 
