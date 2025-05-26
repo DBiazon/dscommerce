@@ -1,7 +1,7 @@
 package com.biazon.dscommerce.controllers;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +28,15 @@ public class ProductController {
 
 	@GetMapping
 	@Operation(summary = "Lista geral de Produtos", description = "Função responsável por lista todos os produtos")
-	public ResponseEntity<List<ProductResponseDTO>> findAllProduct() {
-		List<ProductResponseDTO> listProducts = productService.findAllProducts();
-		return ResponseEntity.status(HttpStatus.OK).body(listProducts);
+	public ResponseEntity<Page<ProductResponseDTO>> findAllProduct(Pageable pageable) {
+		return ResponseEntity.status(HttpStatus.OK).body(productService.findAllProducts(pageable));
 	}
 	
 	@GetMapping("/{id}")
 	@Operation(summary = "Retorna Produto", description = "Função responsável por retorna o nome de um produto")
 	public ResponseEntity<ProductResponseDTO> getOneProduct(@PathVariable Long id) {
-		ProductResponseDTO nomeProduct = this.productService.getOneProduct(id);
-		return ResponseEntity.status(HttpStatus.OK).body(nomeProduct);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(this.productService.getOneProduct(id));
+		
 	}
 }

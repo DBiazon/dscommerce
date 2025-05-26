@@ -7,5 +7,4 @@ import com.biazon.dscommerce.entiteis.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>{
-
 }
