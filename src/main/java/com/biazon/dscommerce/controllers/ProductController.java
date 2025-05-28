@@ -33,17 +33,15 @@ public class ProductController {
 	}
 
 	@GetMapping
-	@Operation(summary = "Lista geral de Produtos", description = "Função responsável por lista todos os produtos")
+	@Operation(summary = "Listar Produtos", description = "Função responsável por lista todos os produtos")
 	public ResponseEntity<Page<ProductResponseDTO>> findAllProduct(Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(productService.findAllProducts(pageable));
 	}
 	
 	@GetMapping("/{id}")
-	@Operation(summary = "Retorna Produto", description = "Função responsável por retorna o nome de um produto")
+	@Operation(summary = "Retornar Produto", description = "Função responsável por retorna o nome de um produto")
 	public ResponseEntity<ProductResponseDTO> getOneProduct(@PathVariable Long id) {
-		
 		return ResponseEntity.status(HttpStatus.OK).body(productService.getOneProduct(id));
-		
 	}
 	
 	@PostMapping
@@ -55,14 +53,14 @@ public class ProductController {
 	}
 	
 	@PutMapping("/{id}")
-	@Operation(summary = "Atualiza Produto", description = "Função responsável por Atualiza um produto")
+	@Operation(summary = "Atualizar Produto", description = "Função responsável por Atualiza um produto")
 	public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id, @RequestBody ProductInsertDTO insertDTO) {
 		return ResponseEntity.status(HttpStatus.OK).body(productService.updateProducts(id, insertDTO));
 	}
 	
 
 	@DeleteMapping("/{id}")
-	@Operation(summary = "Deleta Produto", description = "Função responsável por deletar um produto")
+	@Operation(summary = "Deletar Produto", description = "Função responsável por deletar um produto")
 	public ResponseEntity<Void> deletProduct(@PathVariable Long id) {
 		productService.deletProduct(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); 

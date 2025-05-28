@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.biazon.dscommerce.entiteis.Product;
 import com.biazon.dscommerce.entiteis.dtos.ProductInsertDTO;
 import com.biazon.dscommerce.entiteis.dtos.ProductResponseDTO;
+import com.biazon.dscommerce.exceptions.ResourceNotFoundException;
 import com.biazon.dscommerce.repositories.ProductRepository;
 
 @Service
@@ -29,7 +30,9 @@ public class ProductService {
 
 	@Transactional(readOnly = true)
 	public ProductResponseDTO getOneProduct(Long id) {
-		return new ProductResponseDTO(productRepository.findById(id).get());
+		return new ProductResponseDTO(productRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Produto não encontrado")));
+		
 	}
 
 	@Transactional
