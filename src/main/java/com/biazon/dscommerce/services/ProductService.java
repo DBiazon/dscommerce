@@ -1,5 +1,6 @@
 package com.biazon.dscommerce.services;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,4 +32,12 @@ public class ProductService {
 		Product product = this.productRepository.findById(id).get();
 		return new ProductResponseDTO(product);
 	} 
+	
+	@Transactional
+	public ProductResponseDTO creatProducts(ProductResponseDTO dto){
+		Product product = new Product();
+		BeanUtils.copyProperties(dto, product);
+			
+		return new ProductResponseDTO(this.productRepository.save(product));
+	}
 }

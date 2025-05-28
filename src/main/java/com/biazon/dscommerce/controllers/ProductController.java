@@ -6,9 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.biazon.dscommerce.entiteis.dtos.ProductInsertDTO;
 import com.biazon.dscommerce.entiteis.dtos.ProductResponseDTO;
 import com.biazon.dscommerce.services.ProductService;
 
@@ -37,6 +41,16 @@ public class ProductController {
 	public ResponseEntity<ProductResponseDTO> getOneProduct(@PathVariable Long id) {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(this.productService.getOneProduct(id));
+		
+	}
+	
+	@PostMapping
+	@Operation(summary = "Criar Produto", description = "Função responsável por criar o produto")
+	public ResponseEntity<ProductResponseDTO> creatProducts(@RequestBody ProductInsertDTO insertDTO) {
+		ProductResponseDTO dto  = this.productService.creatProducts(new ProductResponseDTO(insertDTO));
+		
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(dto.id()).toUri()).body(dto);
 		
 	}
 }
