@@ -4,9 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,17 +42,30 @@ public class ProductController {
 	@Operation(summary = "Retorna Produto", description = "Função responsável por retorna o nome de um produto")
 	public ResponseEntity<ProductResponseDTO> getOneProduct(@PathVariable Long id) {
 		
-		return ResponseEntity.status(HttpStatus.OK).body(this.productService.getOneProduct(id));
+		return ResponseEntity.status(HttpStatus.OK).body(productService.getOneProduct(id));
 		
 	}
 	
 	@PostMapping
-	@Operation(summary = "Criar Produto", description = "Função responsável por criar o produto")
+	@Operation(summary = "Criar Produto", description = "Função responsável por criar um produto")
 	public ResponseEntity<ProductResponseDTO> creatProducts(@RequestBody ProductInsertDTO insertDTO) {
-		ProductResponseDTO dto  = this.productService.creatProducts(new ProductResponseDTO(insertDTO));
-		
+		ProductResponseDTO dto  = productService.creatProducts(new ProductResponseDTO(insertDTO));
 		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.id()).toUri()).body(dto);
+	}
+	
+	@PutMapping("/{id}")
+	@Operation(summary = "Atualiza Produto", description = "Função responsável por Atualiza um produto")
+	public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id, @RequestBody ProductInsertDTO insertDTO) {
+		return ResponseEntity.status(HttpStatus.OK).body(productService.updateProducts(id, insertDTO));
+	}
+	
+
+	@DeleteMapping("/{id}")
+	@Operation(summary = "Deleta Produto", description = "Função responsável por deletar um produto")
+	public ResponseEntity<Void> deletProduct(@PathVariable Long id) {
+		productService.deletProduct(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); 
 		
 	}
 }
