@@ -15,6 +15,8 @@ import com.biazon.dscommerce.exceptions.DatabaseException;
 import com.biazon.dscommerce.exceptions.ResourceNotFoundException;
 import com.biazon.dscommerce.repositories.ProductRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ProductService {
 
@@ -52,7 +54,7 @@ public class ProductService {
 			Product product = productRepository.getReferenceById(id);
 			BeanUtils.copyProperties(dto, product);
 			return new ProductResponseDTO(productRepository.save(product));
-		} catch (ResourceNotFoundException e) {
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Produto não encontrado");
 		}
 	}

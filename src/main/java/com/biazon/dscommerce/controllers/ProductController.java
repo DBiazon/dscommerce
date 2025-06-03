@@ -1,5 +1,7 @@
 package com.biazon.dscommerce.controllers;
 
+import java.net.URI;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import com.biazon.dscommerce.services.ProductService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/product")
@@ -46,15 +49,15 @@ public class ProductController {
 	
 	@PostMapping
 	@Operation(summary = "Criar Produto", description = "Função responsável por criar um produto")
-	public ResponseEntity<ProductResponseDTO> creatProducts(@RequestBody ProductInsertDTO insertDTO) {
+	public ResponseEntity<ProductResponseDTO> creatProducts(@Valid @RequestBody ProductInsertDTO insertDTO) {
 		ProductResponseDTO dto  = productService.creatProducts(new ProductResponseDTO(insertDTO));
-		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(dto.id()).toUri()).body(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.id()).toUri();
+		return ResponseEntity.created(uri).body(dto);
 	}
 	
 	@PutMapping("/{id}")
 	@Operation(summary = "Atualizar Produto", description = "Função responsável por Atualiza um produto")
-	public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id, @RequestBody ProductInsertDTO insertDTO) {
+	public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductInsertDTO insertDTO) {
 		return ResponseEntity.status(HttpStatus.OK).body(productService.updateProducts(id, insertDTO));
 	}
 	
